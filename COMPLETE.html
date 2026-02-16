@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory - StockVault</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f4f6f9;
+    padding: 30px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+h1 {
+    font-size: 28px;
+}
+
+p {
+    color: #666;
+    font-size: 14px;
+}
+
+.search-box input {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 250px;
+}
+
+.table-wrapper {
+    background: #fff;
+    border-radius: 10px;
+    overflow-x: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+thead {
+    background: #2f5fa7;
+    color: #fff;
+}
+
+th, td {
+    padding: 14px;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    cursor: pointer;
+    user-select: none;
+}
+
+tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+    background: #f9fafc;
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.in-stock {
+    background: #d4f5e2;
+    color: #1e9e5a;
+}
+
+.low-stock {
+    background: #ffe8cc;
+    color: #d97706;
+}
+
+.out-stock {
+    background: #ffd6d6;
+    color: #d11a2a;
+}
+
+.footer-text {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #666;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .search-box input {
+        width: 100%;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="top-section">
+        <div>
+            <h1>Inventory</h1>
+            <p>Browse and manage all items in stock.</p>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search items...">
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th onclick="sortTable('id')">ID</th>
+                    <th onclick="sortTable('name')">Name</th>
+                    <th onclick="sortTable('category')">Category</th>
+                    <th onclick="sortTable('qty')">Qty</th>
+                    <th onclick="sortTable('price')">Price</th>
+                    <th onclick="sortTable('location')">Location</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="inventoryTable">
+            </tbody>
+        </table>
+    </div>
+
+    <p class="footer-text" id="itemCount"></p>
+
+</div>
+
+<script>
+
+/* ===============================
+   Simulated Backend (Like FindMyStay style)
+   =============================== */
+
+// This can later come from:
+// fetch('/api/items')
+// axios.get('/inventory')
+// PHP API
+// Node/Express backend
+
+let inventoryData = [
+    { id:"INV-008", name:'27" 4K Monitor', category:"Electronics", qty:15, price:599.99, location:"Warehouse A"},
+    { id:"INV-001", name:"Laptop Dell XPS 15", category:"Electronics", qty:25, price:1299.99, location:"Warehouse A"},
+    { id:"INV-006", name:"Mechanical Keyboard", category:"Electronics", qty:75, price:149.99, location:"Warehouse B"},
+    { id:"INV-007", name:"Monitor Arm Mount", category:"Accessories", qty:8, price:89.99, location:"Warehouse C"},
+    { id:"INV-009", name:"Noise Canceling Headset", category:"Electronics", qty:40, price:199.99, location:"Warehouse B"},
+    { id:"INV-002", name:"Office Chair Ergonomic", category:"Furniture", qty:50, price:349.99, location:"Warehouse B"},
+    { id:"INV-004", name:"Standing Desk Frame", category:"Furniture", qty:3, price:499.99, location:"Warehouse C"},
+    { id:"INV-005", name:"USB-C Hub Adapter", category:"Accessories", qty:0, price:59.99, location:"Warehouse A"},
+    { id:"INV-010", name:"Webcam HD 1080p", category:"Accessories", qty:0, price:79.99, location:"Warehouse C"},
+    { id:"INV-003", name:"Wireless Mouse Logitech", category:"Electronics", qty:200, price:29.99, location:"Warehouse A"}
+];
+
+let currentSort = { column: null, asc: true };
+
+function getStatus(qty) {
+    if (qty === 0) return { text: "Out of Stock", class: "out-stock" };
+    if (qty <= 10) return { text: "Low Stock", class: "low-stock" };
+    return { text: "In Stock", class: "in-stock" };
+}
+
+function renderTable(data) {
+    const table = document.getElementById("inventoryTable");
+    table.innerHTML = "";
+
+    data.forEach(item => {
+        const status = getStatus(item.qty);
+
+        table.innerHTML += `
+            <tr>
+                <td>${item.id}</td>
+                <td>${item.name}</td>
+                <td>${item.category}</td>
+                <td>${item.qty}</td>
+                <td>$${item.price.toFixed(2)}</td>
+                <td>${item.location}</td>
+                <td><span class="badge ${status.class}">${status.text}</span></td>
+            </tr>
+        `;
+    });
+
+    document.getElementById("itemCount").innerText =
+        `Showing ${data.length} of ${inventoryData.length} items`;
+}
+
+/* 🔎 Search Filtering */
+document.getElementById("searchInput").addEventListener("input", function() {
+    const searchValue = this.value.toLowerCase();
+
+    const filtered = inventoryData.filter(item =>
+        Object.values(item).some(value =>
+            value.toString().toLowerCase().includes(searchValue)
+        )
+    );
+
+    renderTable(filtered);
+});
+
+/* 🔃 Sorting */
+function sortTable(column) {
+
+    if (currentSort.column === column) {
+        currentSort.asc = !currentSort.asc;
+    } else {
+        currentSort.column = column;
+        currentSort.asc = true;
+    }
+
+    inventoryData.sort((a, b) => {
+        if (typeof a[column] === "number") {
+            return currentSort.asc
+                ? a[column] - b[column]
+                : b[column] - a[column];
+        } else {
+            return currentSort.asc
+                ? a[column].localeCompare(b[column])
+                : b[column].localeCompare(a[column]);
+        }
+    });
+
+    renderTable(inventoryData);
+}
+
+/* Initial Render */
+renderTable(inventoryData);
+
+</script>
+
+</body>
+</html>
