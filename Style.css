@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f5f6f8;
+    color: #333;
+}
+
+/* ================= NAVBAR ================= */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 60px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 20px;
+    color: #ff7a00;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+nav a.active {
+    background: #ff7a00;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.auth button {
+    margin-left: 10px;
+}
+
+
+
+/* ================= HERO ================= */
+.hero {
+    height: 450px;
+    background: url('https://images.unsplash.com/photo-1553413077-190dd305871c') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    padding-left: 60px;
+    position: relative;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.hero-content {
+    position: relative;
+    color: #fff;
+    max-width: 500px;
+}
+
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    margin-bottom: 20px;
+}
+
+.btn-cta {
+    padding: 12px 20px;
+    background: #ff7a00;
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* ================= WHY SECTION ================= */
+.why {
+    padding: 60px;
+    text-align: center;
+}
+
+.why h2 {
+    margin-bottom: 40px;
+}
+
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.feature {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    width: 250px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.feature .icon {
+    font-size: 30px;
+    margin-bottom: 15px;
+    color: #ff7a00;
+}
+
+/* ================= TOOLS ================= */
+.tools {
+    padding: 60px;
+    background: #eef1f5;
+    text-align: center;
+}
+
+.tools h2 {
+    margin-bottom: 40px;
+}
+
+.tool-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.tool {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 180px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.tool:hover {
+    transform: translateY(-5px);
+}
+
+.tool img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+/* ================= FOOTER ================= */
+footer {
+    background: #ffffff;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    border-top: 1px solid #ddd;
+}

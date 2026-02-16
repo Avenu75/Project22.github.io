@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add New Item - StockVault</title>
+<link rel="stylesheet" href="AddItem.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<header>
+    <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-boxes" viewBox="0 0 16 16">
+  <path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434zM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567zM7.5 9.933l-2.75 1.571v3.134l2.75-1.571zm1 3.134 2.75 1.571v-3.134L8.5 9.933zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567zm2.242-2.433V3.504L8.5 5.076V8.21zM7.5 8.21V5.076L4.75 3.504v3.134zM5.258 2.643 8 4.21l2.742-1.567L8 1.076zM15 9.933l-2.75 1.571v3.134L15 13.067zM3.75 14.638v-3.134L1 9.933v3.134z"/>
+</svg> StockVault</div>
+    <nav>
+        <a href="Index.html">Home</a>
+        <a href="Inventory.html">Inventory</a>
+        <a href="AddItem.html" class="active">Add Item</a>
+        <a href="About.html">About</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="page-title">
+        <h1>Add New Item</h1>
+        <p>Fill in the details below to add a new inventory item.</p>
+    </div>
+
+    <div class="card">
+        <form>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Item Name <span style="color: red;">*</span></label>
+                    <input type="text" placeholder="e.g. Wireless Mouse" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Item Code <span style="color: red;">*</span></label>
+                    <input type="text" placeholder="e.g. WM-2026-001" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select>
+                        <option>Electronics</option>
+                        <option>Accessories</option>
+                        <option>Furniture</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity *</label>
+                    <input type="number" value="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Unit Price ($) <span style="color: red;">*</span></label>
+                    <input type="number" step="0.01" placeholder="0.00" required>
+                </div>
+
+                <div class="form-group full">
+                    <label>Priority Level</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="priority"> Low</label>
+                        <label><input type="radio" name="priority"> Normal</label>
+                        <label><input type="radio" name="priority"> High</label>
+                        <label><input type="radio" name="priority"> Urgent</label>
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label>Storage Location</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="location"> Warehouse A</label>
+                        <label><input type="radio" name="location"> Warehouse B</label>
+                        <label><input type="radio" name="location"> Warehouse C</label>
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label>Item Tags</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox"> Fragile</label>
+                        <label><input type="checkbox"> Heavy</label>
+                        <label><input type="checkbox"> Perishable</label>
+                        <label><input type="checkbox"> Hazardous</label>
+                        <label><input type="checkbox"> Oversized</label>
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label>Notifications</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox"> Low stock alert</label>
+                        <label><input type="checkbox"> Price change alert</label>
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label>Description</label>
+                    <textarea placeholder="Optional description of the item..."></textarea>
+                </div>
+
+            </div>
+
+            <button type="submit">✔ Add Item to Inventory</button>
+
+        </form>
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2026 StockVault. All rights reserved.</p>
+    <p>Built with HTML & CSS</p>
+</footer>
+
+</body>
+</html>
